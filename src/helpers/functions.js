@@ -49,16 +49,16 @@ export const calculateSpecialDiscount = (supplyPointData) => {
 
 export const getDiscount = (supplyPointData) => {
     console.log('supplyPointData getDiscount', supplyPointData)
-    const basicDiscount = calculateBasicDiscount(supplyPointData);
     const specialDiscount = calculateSpecialDiscount(supplyPointData);
+    const basicDiscount = calculateBasicDiscount(supplyPointData);
 
     console.log('basicDiscount', basicDiscount)
     console.log('specialDiscount', specialDiscount)
 
-    if (basicDiscount) {
-        return 'basic';
-    } else if (specialDiscount > 100) {
+    if (specialDiscount > 100) {
         return 'special';
+    } else if (basicDiscount) {
+        return 'basic';
     } else {
         return 'no-discount';
     }

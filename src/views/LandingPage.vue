@@ -116,8 +116,7 @@ input {
 }
 
 #data-box {
-    border: 1px black solid;
-    margin-top: 10px;
+    /* border: 1px black solid; */
     padding: 32px;
 }
 
