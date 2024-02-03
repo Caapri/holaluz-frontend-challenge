@@ -1,17 +1,21 @@
 <script setup>
-import functions from '@/helpers/functions';
+import { checkElegibility, getDiscount } from '@/helpers/functions';
 
 const props = defineProps(['clientData', 'supplyPointData']);
 
-const elegibility = functions.checkElegibility(props.clientData, props.supplyPointData);
+const elegibility = checkElegibility(props.clientData, props.supplyPointData);
 console.log('elegibility', elegibility)
 
 // console.log(functions.calculateBasicDiscount(props.supplyPointData))
 // const specialDiscount = functions.calculateSpecialDiscount(props.supplyPointData);
 // console.log('specialDiscount', specialDiscount)
 
-const discount = functions.getDiscount(props.supplyPointData)
-console.log('discount', discount)
+if (elegibility) {
+    const discount = getDiscount(props.supplyPointData)
+    console.log('discount', discount)
+} else {
+    console.log('No eres apto para el producto, por tanto tampoco puedes optar a ningún descuento')
+}
 </script>
 
 <template>
