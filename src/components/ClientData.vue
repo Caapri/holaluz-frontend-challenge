@@ -4,8 +4,6 @@
 
 <template>
     <div class="data-client-container">
-        <!-- <b>{{ props.data }}</b> -->
-
         <h1>Hola {{ props.data.full_name }},</h1>
         <span class="address"><img class="address-icon" src="../assets/address_icon.svg" /> Estás en {{ props.data.address }}</span>
         <br />
