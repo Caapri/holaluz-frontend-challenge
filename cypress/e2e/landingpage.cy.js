@@ -1,13 +1,11 @@
 describe('Landing Page tests', () => {
-    // caso para ver si se monta bien el componente
-
     it('Visits Landing Page', () => {
         cy.visit('http://localhost:5173');
         cy.contains('¡Súmate a la revolución de los tejados con nuestras placas solares!');
         cy.contains('Cámbiate hoy mismo y empieza a ahorrar');
 
-        const searchContainer = cy.get('#search-container');
-        searchContainer.contains('Introduce a continuación tu CUPS y comprueba al instante si puedes sumarte a la revolución de los tejados');
+        cy.get('#search-container').as('search');
+        cy.get('@search').contains('Introduce a continuación tu CUPS y comprueba al instante si puedes sumarte a la revolución de los tejados');
     })
 
     it('Input should be empty by default, and submit button disabled', () => {

@@ -1,49 +1,47 @@
-import { describe, it, expect, vi } from 'vitest'
-
+import { createPinia, setActivePinia } from "pinia";
+import { beforeEach, describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import ProductElegibility from '../ProductElegibility.vue'
-import { checkElegibility, getDiscount } from '@/helpers/functions'
+import { useCupsStore } from '@/stores/cups'
 
-vi.mock('@/helpers/functions', () => ({
-  checkElegibility: vi.fn(),
-  getDiscount: vi.fn(),
-}));
+import ProductElegibility from '../ProductElegibility.vue'
+// import { checkElegibility, getDiscount } from '@/helpers/functions'
 
 function mountProductElegibility () {
-  const wrapper = mount(ProductElegibility, {
-    props: {
-      clientData: {
-        "full_name": "Steven Walters",
-        "address": "Swede street, 7",
-        "cups": "111222",
-        "role": "customer",
-        "building_type": "house"
-      }, 
-      supplyPointData: {
-        "cups": "111222",
-        "tariff": "Three prices",
-        "invoiced_amount": "10.00",
-        "power": {
-          "p1": "4700",
-          "p2": "4500"
-        },
-        "neighbors": ["456123"]
-      }
-    }
-  })
-  
+  const wrapper = mount(ProductElegibility)
   return wrapper
 }
 
 describe('ProductElegibility', () => {
-  it.skip('Mounts properly', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    const store = useCupsStore();
+    store.setClientData({
+      "full_name": "Glenda Gilbert",
+      "address": "Potato street, 9",
+      "cups": "234567",
+      "role": "customer-basic",
+      "building_type": "house"
+    });
+    
+    store.setSupplyPointData({
+      "cups": "234567",
+      "tariff": "Two prices",
+      "invoiced_amount": "45.00",
+      "power": {
+        "p1": "5000",
+        "p2": "4800"
+      },
+      "neighbors": ["123456", "345678"]
+    });
+  })
+
+  it('Mounts properly', () => {
     expect(mountProductElegibility()).toBeTruthy()
   })
 
   it.skip('Show if client can be part of the rooftop revolution', () => {
     const mainMessage = mountProductElegibility().find('.first')
     expect(mainMessage.text()).toContain('Enhorabuena, puedes optar a las placas solares!')
-    // expect(mainMessage.text()).toContain('Lo sentimos, no puedes optar a este producto')
   })
 
   it.skip('Show discount if client have it', () => {
@@ -52,38 +50,5 @@ describe('ProductElegibility', () => {
   })
 
   it.skip('Renders with elegibility and special discount', async () => {
-    // Mock props
-    const clientData = {
-      "full_name": "Steven Walters",
-      "address": "Swede street, 7",
-      "cups": "111222",
-      "role": "customer",
-      "building_type": "house"
-    }
-
-    const supplyPointData = {
-      "cups": "111222",
-      "tariff": "Three prices",
-      "invoiced_amount": "10.00",
-      "power": {
-        "p1": "4700",
-        "p2": "4500"
-      },
-      "neighbors": ["456123"]
-    }
-
-    checkElegibility.mockReturnValue(true);
-    getDiscount.mockReturnValue('special')
-
-    const wrapper = mount(ProductElegibility, {
-      props: { clientData, supplyPointData }
-    });
-
-    await wrapper.vm.$nextTick();
-
-    console.log('html', wrapper.html())
-
-    expect(wrapper.find('.first span').text().toContain('Enhorabuena, puedes optar a las placas solares!'))
-    expect(wrapper.find('.discount-text span').text().toContain('12%'))
   })
 })

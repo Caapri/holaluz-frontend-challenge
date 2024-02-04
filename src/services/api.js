@@ -3,8 +3,6 @@ import supplyPoints from '@/data/supply-points.json';
 
 const apiCalls = {
     getClientData: (cups) => {
-        console.log(`Cups inside getClientData: ${cups}`);
-        console.log(clients);
         const response = clients.find(client => client.cups === cups);
 
         if (response) {
@@ -14,8 +12,6 @@ const apiCalls = {
         }
     },
     getSupplyPointData: (cups) => {
-        console.log(`Cups inside getSupplyPointData: ${cups}`);
-        console.log(supplyPoints);
         const response = supplyPoints.find(supplyPoint => supplyPoint.cups === cups);
 
         if (response) {

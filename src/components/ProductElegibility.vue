@@ -1,18 +1,15 @@
 <script setup>
 import { ref } from 'vue';
 import { checkElegibility, getDiscount } from '@/helpers/functions';
+import { useCupsStore } from '@/stores/cups';
 
-const props = defineProps(['clientData', 'supplyPointData']);
+const store = useCupsStore();
 const discount = ref(null);
 
-const elegibility = checkElegibility(props.clientData, props.supplyPointData);
-console.log('elegibility', elegibility)
+const elegibility = checkElegibility(store.clientData, store.supplyPointData);
 
 if (elegibility) {
-    discount.value = getDiscount(props.supplyPointData)
-    console.log(discount.value)
-} else {
-    console.log('No eres apto para el producto, por tanto tampoco puedes optar a ningún descuento')
+    discount.value = getDiscount(store.supplyPointData);
 }
 </script>
 

@@ -1,19 +1,33 @@
-import { describe, it, expect, vi } from 'vitest'
-
+import { createPinia, setActivePinia } from "pinia";
+import { beforeEach, describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { useCupsStore } from '@/stores/cups'
+
 import SupplyPointData from '../SupplyPointData.vue'
 
 function mountSupplyPointData () {
-    const wrapper = mount(SupplyPointData, { props: { data: Object } })
-    return wrapper
+  const wrapper = mount(SupplyPointData)
+  return wrapper
 }
 
 describe('SupplyPointData', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    const store = useCupsStore();
+    store.setSupplyPointData({
+      "cups": "234567",
+      "tariff": "Two prices",
+      "invoiced_amount": "45.00",
+      "power": {
+        "p1": "5000",
+        "p2": "4800"
+      },
+      "neighbors": ["123456", "345678"]
+    });
+  })
+
   it('Mounts properly', () => {
-    // const wrapper = mount(LandingPage, { props: { msg: 'Hello Vitest' } })
-    // expect(wrapper.text()).toContain('Hello Vitest')
     expect(mountSupplyPointData()).toBeTruthy()
-    // Check if submit button is mounted
-    // expect(mountClientData().text()).toContain('Consultar')
   })
 })
+

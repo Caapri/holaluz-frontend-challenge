@@ -4,33 +4,35 @@
     import ProductElegibility from '@/components/ProductElegibility.vue';
     import apiCalls from '../services/api';
     import { ref } from 'vue';
+    import { useCupsStore } from '@/stores/cups.js';
 
     // Refs to update in real time the values of each variable when them changes
     const cups = defineModel({ required: true });
-    const clientData = ref(null);
-    const supplyPointData = ref(null);
     const error = ref(null);
     const loaded = ref(false);
 
+    const store = useCupsStore();
+
     const resetData = () => {
-        clientData.value = null;
-        supplyPointData.value = null;
+        store.setClientData(null);
+        store.setSupplyPointData(null);
         error.value = null;
         loaded.value = false;
     }
 
     const getDataByCups = () => {
         try {
-            clientData.value = apiCalls.getClientData(cups.value);
-            supplyPointData.value = apiCalls.getSupplyPointData(cups.value);
+            const clientData = apiCalls.getClientData(cups.value);
+            const supplyPointData = apiCalls.getSupplyPointData(cups.value);
+
+            store.setClientData(clientData);
+            store.setSupplyPointData(supplyPointData);
+
             loaded.value = true;
         } catch (e) {
             error.value = e.message;
             loaded.value = false;
         }
-
-        // console.log('clientData', clientData);
-        // console.log('supplyPointData', supplyPointData);
     }
 
     const submitSearch = () => {
@@ -65,14 +67,14 @@
         </div>
     </div>
 
-    <div id="data-box" v-if="clientData && supplyPointData">
+    <div id="data-box" v-if="store.clientData && store.supplyPointData">
         <button @click="cups = undefined; resetData()">Introducir otro CUPS</button>
 
         <div class="client-info">
-            <ClientData :data="clientData" />
-            <SupplyPointData :data="supplyPointData" />
+            <ClientData />
+            <SupplyPointData />
         </div>
-        <ProductElegibility :clientData="clientData" :supplyPointData="supplyPointData" />
+        <ProductElegibility />
     </div>
 </template>
 

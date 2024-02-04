@@ -1,23 +1,24 @@
 <script setup>
-    const props = defineProps(['data']);
+    import { useCupsStore } from '@/stores/cups';
+
+    const store = useCupsStore();
 </script>
 
 <template>
     <div class="data-supplypoint-container">
         <div class="supply-point-info">
-            <h3 class="tariff">Tarifa {{ props.data.tariff }}</h3>
+            <h3 class="tariff">Tarifa {{ store.supplyPointData.tariff }}</h3>
             <br />
             <div class="power">
                 <span class="title">Potencia contratada:</span>
                 <div class="values">
-                    <span class="p1">P1: {{ parseInt(props.data.power.p1) / 1000 }} kW</span>
-                    <span class="p2">P2: {{ parseInt(props.data.power.p2) / 1000 }} kW</span>
+                    <span class="p1">P1: {{ parseInt(store.supplyPointData.power.p1) / 1000 }} kW</span>
+                    <span class="p2">P2: {{ parseInt(store.supplyPointData.power.p2) / 1000 }} kW</span>
                 </div>
             </div>
         </div>
         <div class="amount">
-            <!-- TODO: Hacer que el font-size sea dinámico dependiendo del tamaño de la pantalla -->
-            <h3 class="amount-title">Importe facturado <span class="invoiced-amount">{{ props.data.invoiced_amount }} €</span></h3>
+            <h3 class="amount-title">Importe facturado <span class="invoiced-amount">{{ store.supplyPointData.invoiced_amount }} €</span></h3>
         </div>
     </div>
 </template>
