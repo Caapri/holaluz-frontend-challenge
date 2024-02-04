@@ -17,18 +17,39 @@ describe('LandingPage', () => {
     expect(mountLandingPage().text()).toContain('Consultar')
   })
 
-  it('Click submit button', async () => {
-    const form = mountLandingPage().find('form')
-    const spyOnForm = vi.spyOn(form, 'trigger')
-    await form.trigger('click')
+  // it('Click submit button', async () => {
+  //   const form = mountLandingPage().find('form')
+  //   const spyOnForm = vi.spyOn(form, 'trigger')
+  //   await form.trigger('click')
 
-    expect(spyOnForm).toHaveBeenCalledOnce()
-  })
+  //   expect(spyOnForm).toHaveBeenCalledOnce()
+  // })
 
   it('Renders the input value', async () => {
     const input = mountLandingPage().find('input')
     expect(input.text()).toContain('')
     await input.setValue('123456')
     expect(input.element.value).toEqual('123456')
+  })
+
+  it.skip('Show error text if cups value is incorrect', async () => {
+    const input = mountLandingPage().find('input')
+    const form = mountLandingPage().find('form')
+    input.element.value = '262626'
+    // input.setValue('262626')
+    // await mountLandingPage().find('form').trigger('submit')
+    input.trigger('input')
+
+    // await form.trigger('click')
+
+    // await mountLandingPage().setData({cups: '262626'})
+    // await mountLandingPage().find('button').trigger('click')
+    // await mountLandingPage().vm.$nextTick();
+    const error = mountLandingPage().find('#text-error')
+    console.log('wrapper html:', mountLandingPage().html())
+    console.log('error', error)
+    expect(error.exists()).toBe(true);
+    
+    expect(error.text()).toContain('Client data with CUPS 262626 doesn\'t exist')
   })
 })

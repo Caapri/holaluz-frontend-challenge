@@ -1,11 +1,11 @@
 @font-face {
     font-family: Gilroy;
-    src: url('../assets/fonts/Gilroy-Regular.ttf');
+    src: url('../fonts/Gilroy-Regular.ttf');
 }
 
 @font-face {
     font-family: GilroySemibold;
-    src: url('../assets/fonts/Gilroy-SemiBold.ttf');
+    src: url('../fonts/Gilroy-SemiBold.ttf');
 }
 
 * {
@@ -17,13 +17,6 @@
 
 html, body, #app {
     height: 100%;
-}
-
-body {
-    background-image: url('../assets/holaluz_placas.jpg');
-    background-repeat: no-repeat;
-    background-position: 50% 0;
-    background-size: cover;
 }
 
 button {

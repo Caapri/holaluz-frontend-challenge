@@ -5,9 +5,9 @@
 <template>
     <header>
         <a href="#">
-            <img class="logo" src="../assets/logo-gradient.svg" alt="Holaluz, la compañía de luz que te ofrece energía 100% verde" />
+            <img class="logo" src="../assets/img/logo-gradient.svg" alt="Holaluz, la compañía de luz que te ofrece energía 100% verde" />
         </a>
-        <img src="../assets/luz-verde.svg" alt="100% luz verde" />
+        <img src="../assets/img/greenlight.svg" alt="100% luz verde" />
     </header>
 </template>
 

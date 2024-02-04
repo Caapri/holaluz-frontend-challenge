@@ -1,32 +1,24 @@
 <script setup>
     const props = defineProps(['data']);
-
-    console.log('props data supply: ', props.data)
 </script>
 
 <template>
     <div class="data-supplypoint-container">
-        <!-- <b>{{ props.data }}</b> -->
-
-        <!-- <h1>Información sobre tu punto de suministro</h1>
-        <br /> -->
         <div class="supply-point-info">
             <h3 class="tariff">Tarifa {{ props.data.tariff }}</h3>
             <br />
             <div class="power">
-                <span class="title">Potencia contratada</span>
-                <span class="p1">Período Punta (P1): {{ parseInt(props.data.power.p1) / 1000 }} Kwh</span>
-                <span class="p2">Período Llano (P2): {{ parseInt(props.data.power.p2) / 1000 }} Kwh</span>
+                <span class="title">Potencia contratada:</span>
+                <div class="values">
+                    <span class="p1">P1: {{ parseInt(props.data.power.p1) / 1000 }} kW</span>
+                    <span class="p2">P2: {{ parseInt(props.data.power.p2) / 1000 }} kW</span>
+                </div>
             </div>
         </div>
         <div class="amount">
             <!-- TODO: Hacer que el font-size sea dinámico dependiendo del tamaño de la pantalla -->
             <h3 class="amount-title">Importe facturado <span class="invoiced-amount">{{ props.data.invoiced_amount }} €</span></h3>
         </div>
-        <!-- <h4>Nº CUPS: {{ props.data.cups }}</h4>
-        <h4>Tarifa: {{ props.data.tariff }}</h4>
-        <h4>Importe facturado: {{ props.data.invoiced_amount }}€</h4>
-        <h4>Potencia: </h4> -->
     </div>
 </template>
 
@@ -53,13 +45,13 @@
     flex-direction: column;
 }
 
-.title {
-    font-size: 18px;
-    font-weight: bold;
+.values {
+    display: flex;
+    gap: 20%;
 }
 
-.p1 {
-    
+.p1, .p2 {
+    font-weight: bold;
 }
 
 .amount {

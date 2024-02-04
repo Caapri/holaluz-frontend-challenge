@@ -1,5 +1,4 @@
 <script setup>
-    import AppHeader from '@/components/AppHeader.vue';
     import ClientData from '@/components/ClientData.vue';
     import SupplyPointData from '@/components/SupplyPointData.vue';
     import ProductElegibility from '@/components/ProductElegibility.vue';
@@ -21,45 +20,47 @@
     }
 
     const getDataByCups = () => {
-        console.log(cups.value);
-
         try {
             clientData.value = apiCalls.getClientData(cups.value);
             supplyPointData.value = apiCalls.getSupplyPointData(cups.value);
             loaded.value = true;
         } catch (e) {
-            console.log('Error', e);
             error.value = e.message;
             loaded.value = false;
         }
 
-        console.log('clientData', clientData);
-        console.log('supplyPointData', supplyPointData);
+        // console.log('clientData', clientData);
+        // console.log('supplyPointData', supplyPointData);
     }
 
     const submitSearch = () => {
         resetData();
         getDataByCups();
     }
-
-    // TODO: usar emojis de tristeza o de happy si puede aplicar al producto
-    // TODO: Hacer cálculos de descuentos
 </script>
 
 <template>
-    <AppHeader />
+    <section id="product-section">
+        <div class="product-section--text">
+            <p>¡Súmate a la revolución de los tejados con nuestras placas solares!</p>
+            <p>Cámbiate hoy mismo y empieza a ahorrar</p>
+        </div>
+    </section>
 
-    <div id="search-box" v-if="!loaded">
-        <form @submit.prevent="submitSearch">
-            <input type="text" v-model="cups"
-                placeholder="Introduce el número CUPS"
-                maxlength="6"
-                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                autofocus
-            />
-            <button type="submit" :disabled="!cups">Consultar</button>
-        </form>
-        <div id="text-error" v-if="error && cups != ''">
+    <div id="search-container" v-if="!loaded">
+        <p>Introduce a continuación tu CUPS y comprueba <b>al instante</b> si puedes sumarte a la revolución de los tejados</p>
+        <div class="search-box">
+            <form @submit.prevent="submitSearch">
+                <input type="text" v-model="cups"
+                    placeholder="Introduce el número CUPS"
+                    maxlength="6"
+                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    autofocus
+                />
+                <button type="submit" :disabled="!cups">Consultar</button>
+            </form>
+        </div>
+        <div id="text-error" v-if="error">
             {{ error }}
         </div>
     </div>
@@ -76,18 +77,73 @@
 </template>
 
 <style scoped>
-#search-box {
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
+#product-section {
+    background-image: url('../assets/img/techos-solares.jpg');
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
+    height: 70%;
+}
+
+.product-section--text {
+    width: calc(80% + 20vw);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 40px;
+    color: #fff;
+    font-weight: bold;
+    
+}
+
+.product-section--text > p:first-child {
+    margin-bottom: 5rem;
+    font-size: calc(30px + 0.390625vw);
+}
+
+.product-section--text > p:last-child {
+    font-size: calc(20px + 0.390625vw);
+}
+
+.content {
+    padding: 32px;
+  }
+
+#search-container {
+    transform: translate(0%,-68px);
     box-shadow: 0 9px 18px 0 #c8c0ab;
     background: #fff;
-    width: 50%;
     padding: 32px;
-    margin: 32px;
     border-radius: 8px;
-    /* radial-gradient: #e5007e,#f06b18 32%,#ffc621 */
-    /* background: linear-gradient(24deg, rgba(229,0,126,1) 0%, rgba(240,107,24,1) 35%, rgba(255,198,33,1) 100%); */
+    width: 50%;
+    margin: 0 auto;
+}
+
+@media (min-width: 710px) {
+    .product-section--text {
+        width: 50%;
+    }
+}
+
+@media (max-width: 710px) {
+    #search-container {
+        margin: 0rem 1rem 1rem 1rem;
+        width: auto;
+    }
+
+    form {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #data-box > .client-info {
+        flex-direction: column;
+    }
+}
+
+#search-container > p {
+    margin-bottom: 15px;
+    width: 90%;
 }
 
 #text-error {
@@ -98,14 +154,7 @@
 }
 
 form {
-    /* box-shadow: 0 9px 18px 0 #c8c0ab;
-    background: #F9F8F3;
-    width: 50%;
-    padding: 32px;
-    margin: 32px;
-    border-radius: 8px; */
     display: flex;
-    align-items: center;
     gap: 10px;
 }
 
@@ -114,7 +163,7 @@ input {
     border: 1px #d4d7db solid;
     padding: 0 2rem 0 0.5rem;
     border-radius: 4px;
-    flex: 1;
+    width: 100%;
 }
 
 input:focus {
@@ -127,8 +176,12 @@ input:hover {
 }
 
 #data-box {
-    /* border: 1px black solid; */
+    transform: translate(0%,-27vh);
+    box-shadow: 0 9px 18px 0 #c8c0ab;
+    background: #fff;
     padding: 32px;
+    margin: 0rem 1rem 1rem 1rem;
+    border-radius: 8px;
 }
 
 #data-box > .client-info {
